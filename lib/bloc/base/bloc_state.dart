@@ -1,5 +1,3 @@
-
-
 import '../../model/http_response.dart';
 import '../../model/http_redirect.dart';
 
@@ -16,101 +14,62 @@ enum BlocHttpType {
 }
 
 abstract class BlocHttpState extends BlocBaseState {
+  HttpResponse get response;
   int get code;
-
   BlocHttpType get type;
-
   String get message;
-
-  void setHttpModel(HttpResponse httpModel);
-  //
-  // bool isNotError(BuildContext context) {
-  //   if (this is BlocHttpFailure) {
-  //     RouteHelper().replace(context, RouteHelper.routeError,
-  //         arguments: {BlocHttpFailure.tag: this});
-  //     return false;
-  //   } else {
-  //     return true;
-  //   }
-  // }
 }
 
 mixin BlocHttpSuccess implements BlocHttpState {
   static const String tag = 'BlocHttpSuccess';
 
-  late final HttpResponse _model;
-
   @override
-  void setHttpModel(HttpResponse httpModel) {
-    _model = httpModel;
-  }
-
-  @override
-  int get code => _model.statusCode;
+  int get code => response.statusCode;
 
   @override
   BlocHttpType get type => BlocHttpType.success;
 
   @override
-  String get message => _model.statusMessage;
+  String get message => response.statusMessage;
 }
 
 mixin BlocHttpFailure implements BlocHttpState {
   static const String tag = 'BlocHttpFailure';
 
-  late final HttpResponse _model;
-  late final BlocHttpType _type;
+  @override
+  int get code => response.statusCode;
 
   @override
-  void setHttpModel(HttpResponse httpModel) {
-    _model = httpModel;
-    switch (_model.statusCode) {
+  BlocHttpType get type {
+    switch (response.statusCode) {
       case 400:
-        _type = BlocHttpType.badRequest;
-        break;
+        return BlocHttpType.badRequest;
       case 401:
-        _type = BlocHttpType.unauthorized;
-        break;
+        return BlocHttpType.unauthorized;
       case 403:
-        _type = BlocHttpType.forbidden;
-        break;
+        return BlocHttpType.forbidden;
       case 404:
-        _type = BlocHttpType.notFound;
-        break;
+        return BlocHttpType.notFound;
       default:
-        _type = BlocHttpType.serverError;
-        break;
+        return BlocHttpType.serverError;
     }
   }
 
   @override
-  int get code => _model.statusCode;
-
-  @override
-  BlocHttpType get type => _type;
-
-  @override
-  String get message => _model.statusMessage;
+  String get message => response.statusMessage;
 }
 
 mixin BlocHttpRedirect implements BlocHttpState {
   static const String tag = 'BlocHttpRedirect';
 
-  late final HttpResponse _model;
-
   @override
-  void setHttpModel(HttpResponse httpModel) {
-    _model = httpModel;
-  }
-
-  @override
-  int get code => _model.statusCode;
+  int get code => response.statusCode;
 
   @override
   BlocHttpType get type => BlocHttpType.redirect;
 
   @override
-  String get message => _model.statusMessage;
+  String get message => response.statusMessage;
 
-  List<RedirectModel> get redirects => _model.redirects;
+  List<RedirectModel> get redirects => response.redirects;
 }

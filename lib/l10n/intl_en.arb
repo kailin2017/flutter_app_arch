@@ -3,5 +3,6 @@
   "appName": "Kailin Flutter",
   "homeTitle": "Home",
   "playerTitle": "Player",
+  "pagingTitle": "Binance Paging",
   "errorTitle": "Error"
 }

@@ -36,6 +36,14 @@ class _HomePageState extends State<HomePage> {
                 },
                 child: Text(localizations.playerTitle)),
           ),
+          Padding(
+            padding: paddingEdgeInsets,
+            child: ElevatedButton(
+                onPressed: () {
+                  RouteHelper().push(context, RouteName.paging.path);
+                },
+                child: Text(localizations.pagingTitle)),
+          ),
         ],
       )),
     );
