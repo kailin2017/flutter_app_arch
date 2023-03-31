@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app_arch/app/app_flavor.dart';
-import 'package:flutter_app_arch/bloc/app_bloc.dart';
+import 'package:flutter_app_arch/bloc/base/bloc.dart';
 import 'package:flutter_app_arch/bloc/env/app_env_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -24,9 +24,9 @@ class _KailinApp extends State<KailinApp> {
 
   @override
   Widget build(BuildContext context) {
-    return AppBlocProvider(
+    return BaseBlocProvider(
         create: (blocContext) => AppEnvBloc(),
-        child: AppBlocBuilder<AppEnvBloc, AppEnvState>(
+        child: BaseBlocBuilder<AppEnvBloc, AppEnvState>(
           builder: (blocContext, state) {
             if (state is AppEnvInitial) {
               BlocProvider.of<AppEnvBloc>(blocContext).add(AppEnvLoad(flavor));
@@ -51,7 +51,7 @@ class _KailinApp extends State<KailinApp> {
 class _KailinAppHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return AppBlocListener<AppEnvBloc, AppEnvState>(
+    return BaseBlocListener<AppEnvBloc, AppEnvState>(
       listener: (context, state) async {
         if (state is AppEnvUpdate) {
           WidgetsBinding.instance.addPostFrameCallback((timeStamp) {

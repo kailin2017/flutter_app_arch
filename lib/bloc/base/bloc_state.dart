@@ -1,9 +1,9 @@
 
 
-import '../model/http_response.dart';
-import '../model/http_redirect.dart';
+import '../../model/http_response.dart';
+import '../../model/http_redirect.dart';
 
-abstract class BlocState {}
+abstract class BlocBaseState {}
 
 enum BlocHttpType {
   success, //200
@@ -15,7 +15,7 @@ enum BlocHttpType {
   serverError //500
 }
 
-abstract class BlocHttpState extends BlocState {
+abstract class BlocHttpState extends BlocBaseState {
   int get code;
 
   BlocHttpType get type;

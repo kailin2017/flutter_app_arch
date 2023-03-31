@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../bloc/app_bloc.dart';
+import '../../bloc/base/bloc_state.dart';
 import '../../utils/locale_helper.dart';
 
 class ErrorPage extends StatefulWidget {

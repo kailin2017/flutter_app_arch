@@ -1,30 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../routes.dart';
-import 'app_bloc_state.dart';
+import '../../routes.dart';
+import 'bloc_state.dart';
 
-class AppBlocListener<B extends StateStreamable<S>, S>
-    extends BlocListener<B, S> {
-  AppBlocListener({
+class BaseBlocBuilder<B extends StateStreamable<S>, S>
+    extends BlocBuilder<B, S> {
+  BaseBlocBuilder({
     Key? key,
-    required BlocWidgetListener<S> listener,
+    required BlocWidgetBuilder<S> builder,
     B? bloc,
-    BlocListenerCondition<S>? listenWhen,
-    Widget? child,
+    BlocBuilderCondition<S>? buildWhen,
   }) : super(
             key: key,
-            child: child,
-            listener: (context, state) {
+            builder: (context, state) {
               if (state is BlocHttpFailure) {
                 RouteHelper().replace(context, RouteName.error.path,
                     arguments: {BlocHttpFailure.tag: state});
+                return const Center();
               } else if (state is BlocHttpRedirect) {
                 RouteHelper().redirect(state.redirects.first.location);
+                return builder(context, state);
               } else {
-                listener(context, state);
+                return builder(context, state);
               }
             },
             bloc: bloc,
-            listenWhen: listenWhen);
+            buildWhen: buildWhen);
 }
