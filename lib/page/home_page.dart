@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import '../routes.dart';
 import '../utils/locale_helper.dart';
@@ -12,10 +11,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
-  static const platform = MethodChannel('samples.flutter.dev/battery');
-  String _batteryLevel = 'Unknown battery level.';
-
   @override
   Widget build(BuildContext context) {
     var localizations = LocaleHelper().localizations(context);
@@ -44,22 +39,16 @@ class _HomePageState extends State<HomePage> {
                 },
                 child: Text(localizations.pagingTitle)),
           ),
+          Padding(
+            padding: paddingEdgeInsets,
+            child: ElevatedButton(
+                onPressed: () {
+                  RouteHelper().push(context, RouteName.mc.path);
+                },
+                child: Text(localizations.mcTitle)),
+          ),
         ],
       )),
     );
-  }
-
-  Future<void> _getBatteryLevel() async {
-    String batteryLevel;
-    try {
-      final int result = await platform.invokeMethod('getBatteryLevel');
-      batteryLevel = 'Battery level at $result % .';
-    } on PlatformException catch (e) {
-      batteryLevel = "Failed to get battery level: '${e.message}'.";
-    }
-
-    setState(() {
-      _batteryLevel = batteryLevel;
-    });
   }
 }
