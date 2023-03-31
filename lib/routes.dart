@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app_arch/page/error/error_page.dart';
 import 'package:flutter_app_arch/page/home_page.dart';
+import 'package:flutter_app_arch/page/player_page.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-enum RouteName { home, error }
+enum RouteName { home, error, player }
 
 extension RouteNameEx on RouteName {
   String get path {
@@ -12,6 +13,8 @@ extension RouteNameEx on RouteName {
         return '/home';
       case RouteName.error:
         return '/error';
+      case RouteName.player:
+        return '/player';
     }
   }
 }
@@ -25,7 +28,8 @@ class RouteHelper {
 
   var routeMap = <String, WidgetBuilder>{
     RouteName.home.path: (BuildContext context) => const HomePage(),
-    RouteName.error.path: (BuildContext context) => const ErrorPage()
+    RouteName.error.path: (BuildContext context) => const ErrorPage(),
+    RouteName.player.path: (BuildContext context) => const PlayerPage()
   };
 
   void replace(BuildContext context, String routeName, {Object? arguments}) {

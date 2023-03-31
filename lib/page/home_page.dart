@@ -28,7 +28,14 @@ class _HomePageState extends State<HomePage> {
           body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-
+          Padding(
+            padding: paddingEdgeInsets,
+            child: ElevatedButton(
+                onPressed: () {
+                  RouteHelper().push(context, RouteName.player.path);
+                },
+                child: Text(localizations.playerTitle)),
+          ),
         ],
       )),
     );

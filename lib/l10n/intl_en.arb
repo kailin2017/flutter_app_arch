@@ -2,5 +2,6 @@
   "@@locale": "en",
   "appName": "Kailin Flutter",
   "homeTitle": "Home",
+  "playerTitle": "Player",
   "errorTitle": "Error"
 }
